@@ -4,7 +4,7 @@
     <p>{{ $session->name }}</p>
     <ul>
         @foreach ($session->grades as $grade)
-            <li>{{$grade->name}}</li>
+            <li>{{$grade->id}}: {{$grade->name}}</li>
         @endforeach
     </ul>
 </div>
