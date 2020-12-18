@@ -20,7 +20,7 @@ class Student extends Model
     use HasFactory;
 
     public $table = 'students';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -36,7 +36,7 @@ class Student extends Model
     public function getEmailAttribute(){
         return $this->name.'@admin.com';
     }
-    
+
 
     /**
      * The attributes that should be casted to native types.
@@ -65,5 +65,8 @@ class Student extends Model
 // getNameAttribute
 
 
-
+public function batches()
+{
+    return $this->belongsToMany(Batch::class);
+}
 }

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateSessionRequest;
 use App\Http\Requests\UpdateSessionRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Grade;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Flash;
+use PhpParser\Node\Stmt\Foreach_;
 use Response;
 
 class SessionController extends AppBaseController
@@ -51,6 +53,14 @@ class SessionController extends AppBaseController
 
         /** @var Session $session */
         $session = Session::create($input);
+
+        $grades = Grade::all();
+        $lastdata = \DB::table('sessions')->orderBy('id', 'desc')->first();
+        // dd($lastdata);
+
+        foreach($grades as $grade){
+            $session->grades()->attach($grade);
+        }
 
         Flash::success('Session saved successfully.');
 

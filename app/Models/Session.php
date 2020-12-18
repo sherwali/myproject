@@ -20,7 +20,7 @@ class Session extends Model
     use HasFactory;
 
     public $table = 'sessions';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -57,7 +57,7 @@ class Session extends Model
 
     public function grades()
     {
-        return $this->belongsToMany(Grade::class);
+        return $this->belongsToMany(Grade::class, Batch::class, 'session_id', 'grade_id');
     }
-    
+
 }

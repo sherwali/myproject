@@ -55,9 +55,9 @@ class Grade extends Model
         'deleted_at' => 'nullable'
     ];
 
-  public function sessions()
-  {
-      return $this->belongsToMany(Session::class);
-  }
+ public function sessions()
+ {
+     return $this->belongsToMany(Session::class, Batch::class, 'grade_id', 'session_id');
+ }
 }
 
