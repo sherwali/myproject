@@ -6,6 +6,7 @@ use App\Http\Requests\CreateGradeRequest;
 use App\Http\Requests\UpdateGradeRequest;
 use App\Http\Controllers\AppBaseController;
 use App\Models\Grade;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -51,6 +52,8 @@ class GradeController extends AppBaseController
 
         /** @var Grade $grade */
         $grade = Grade::create($input);
+        $session = Session::orderBy('id', 'desc')->first();
+        $session->grades()->attach($grade);
 
         Flash::success('Grade saved successfully.');
 

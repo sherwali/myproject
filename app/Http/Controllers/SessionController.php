@@ -55,8 +55,6 @@ class SessionController extends AppBaseController
         $session = Session::create($input);
 
         $grades = Grade::all();
-        $lastdata = \DB::table('sessions')->orderBy('id', 'desc')->first();
-        // dd($lastdata);
 
         foreach($grades as $grade){
             $session->grades()->attach($grade);
