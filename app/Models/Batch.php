@@ -8,8 +8,8 @@ class Batch extends Pivot
 {
     protected $table = 'batches';
 
-    public function students()
-    {
-        return $this->belongsToMany(Student::class);
-    }
+   public function students()
+   {
+       return $this->belongsToMany(Student::class, 'batch_student', 'batch_id', 'student_id');
+   }
 }

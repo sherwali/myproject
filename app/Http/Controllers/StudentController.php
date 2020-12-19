@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Controllers\AppBaseController;
+use App\Models\Batch;
 use App\Models\Student;
+use App\Models\Session;
+
 use Illuminate\Http\Request;
 use Flash;
 use Response;
@@ -24,6 +27,7 @@ class StudentController extends AppBaseController
         /** @var Student $students */
         $students = Student::all();
 
+
         return view('students.index')
             ->with('students', $students);
     }
@@ -35,7 +39,10 @@ class StudentController extends AppBaseController
      */
     public function create()
     {
-        return view('students.create');
+        $session = Session::orderBy('id', 'desc')->first();
+        $grades = $session->grades;
+        // dd($grades);
+        return view('students.create', compact('grades'));
     }
 
     /**
@@ -48,9 +55,14 @@ class StudentController extends AppBaseController
     public function store(CreateStudentRequest $request)
     {
         $input = $request->all();
-
+        // dd($request->grade);
         /** @var Student $student */
         $student = Student::create($input);
+        $session = Session::orderBy('id', 'desc')->first();
+        // $session = Session::all()->last();
+        $batch = Batch::where('session_id',$session->id)->where('grade_id', $request->grade)->first();
+        // dd($student->id);
+        $student->batches()->attach($batch);
 
         Flash::success('Student saved successfully.');
 
