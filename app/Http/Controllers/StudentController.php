@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Controllers\AppBaseController;
-use App\Models\Batch;
+use App\Models\Batches;
 use App\Models\Student;
 use App\Models\Session;
 
@@ -60,7 +60,7 @@ class StudentController extends AppBaseController
         $student = Student::create($input);
         $session = Session::orderBy('id', 'desc')->first();
         // $session = Session::all()->last();
-        $batch = Batch::where('session_id',$session->id)->where('grade_id', $request->grade)->first();
+        $batch = Batches::where('session_id', $session->id)->where('grade_id', $request->grade)->first();
         // dd($student->id);
         $student->batches()->attach($batch);
 
@@ -99,6 +99,8 @@ class StudentController extends AppBaseController
      */
     public function edit($id)
     {
+        $session = Session::orderBy('id', 'desc')->first();
+        $grades = $session->grades;
         /** @var Student $student */
         $student = Student::find($id);
 
@@ -108,7 +110,7 @@ class StudentController extends AppBaseController
             return redirect(route('students.index'));
         }
 
-        return view('students.edit')->with('student', $student);
+        return view('students.edit', compact('student', 'grades'));
     }
 
     /**
@@ -123,6 +125,7 @@ class StudentController extends AppBaseController
     {
         /** @var Student $student */
         $student = Student::find($id);
+
 
         if (empty($student)) {
             Flash::error('Student not found');

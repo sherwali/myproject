@@ -57,7 +57,6 @@ class Session extends Model
 
     public function grades()
     {
-        return $this->belongsToMany(Grade::class, Batch::class, 'session_id', 'grade_id');
+        return $this->belongsToMany(Grade::class, Batches::class, 'session_id', 'grade_id');
     }
-
 }

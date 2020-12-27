@@ -7,19 +7,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * Class Grade
+ * Class Batches
  * @package App\Models
- * @version December 14, 2020, 8:27 pm UTC
+ * @version December 20, 2020, 3:12 am UTC
  *
- * @property string $name
+ * @property integer $session_id
+ * @property integer $grade_id
  */
-class Grade extends Model
+class Batches extends Model
 {
     use SoftDeletes;
 
     use HasFactory;
 
-    public $table = 'grades';
+    public $table = 'batches';
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -30,7 +31,8 @@ class Grade extends Model
 
 
     public $fillable = [
-        'name'
+        'session_id',
+        'grade_id'
     ];
 
     /**
@@ -40,7 +42,8 @@ class Grade extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'name' => 'string'
+        'session_id' => 'integer',
+        'grade_id' => 'integer'
     ];
 
     /**
@@ -49,14 +52,23 @@ class Grade extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|string|max:255',
+        'session_id' => 'required|integer',
+        'grade_id' => 'required|integer',
         'created_at' => 'nullable',
         'updated_at' => 'nullable',
         'deleted_at' => 'nullable'
     ];
 
-    public function sessions()
+    public function grade()
     {
-        return $this->belongsToMany(Session::class, Batches::class, 'grade_id', 'session_id');
+        return $this->belongsTo(Grade::class);
+    }
+    public function session()
+    {
+        return $this->belongsTo(Session::class);
+    }
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'batch_student', 'batch_id', 'student_id');
     }
 }
