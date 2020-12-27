@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Eloquent as Model;
+use Illuminate\Bus\Batch;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -33,8 +34,9 @@ class Student extends Model
         'name'
     ];
 
-    public function getEmailAttribute(){
-        return $this->name.'@admin.com';
+    public function getEmailAttribute()
+    {
+        return $this->name . '@admin.com';
     }
 
 
@@ -62,11 +64,12 @@ class Student extends Model
 
     // mutator
     // accessor
-// getNameAttribute
+    // getNameAttribute
 
 
-public function batches()
-{
-    return $this->belongsToMany(Batches::class, 'batch_student', 'student_id', 'batch_id');
-}
+
+    public function batches()
+    {
+        return $this->belongsToMany(Batches::class, 'batch_student', 'student_id', 'batch_id');
+    }
 }

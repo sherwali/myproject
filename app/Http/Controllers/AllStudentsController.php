@@ -14,6 +14,7 @@ class AllStudentsController extends Controller
 
         if(!$session->name==null){
             // dd($session->name);
+            
         }
         else
         {
@@ -26,5 +27,10 @@ class AllStudentsController extends Controller
         return view('allstudents.index', compact('batches'));
         // $grades = Grade::all();
         // return view('allstudents.index', compact('batches','grades'));
+    }
+
+    public function grades($id){
+        // return 'hi';
+        dd(request());
     }
 }

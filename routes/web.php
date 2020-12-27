@@ -32,3 +32,4 @@ Route::resource('grades', App\Http\Controllers\GradeController::class);
 Route::resource('batches', App\Http\Controllers\BatchesController::class);
 Route::get('allstudents', [App\Http\Controllers\AllStudentsController::class, 'index'])->name('allstudents');
 Route::get('allstudents/{session}', [App\Http\Controllers\AllStudentsController::class, 'index']);
+Route::get('allstudents/grade/{id}', [App\Http\Controllers\AllStudentsController::class, 'grades'])->name('allstudents.grades');
