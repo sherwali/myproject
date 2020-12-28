@@ -14,23 +14,18 @@ class AllStudentsController extends Controller
 
         if(!$session->name==null){
             // dd($session->name);
-            
+
         }
         else
         {
             $session = Session::orderBy('id', 'desc')->first();
-            // dd($session->name);
         }
-
+        
+        $allsessions = Session::all();
         $batches = Batches::where('session_id',$session->id)->get();
-        // dd($batches);
-        return view('allstudents.index', compact('batches'));
-        // $grades = Grade::all();
-        // return view('allstudents.index', compact('batches','grades'));
+        return view('allstudents.index', compact('batches','allsessions'));
+
     }
 
-    public function grades($id){
-        // return 'hi';
-        dd(request());
-    }
+
 }

@@ -67,8 +67,12 @@ class Batches extends Model
     {
         return $this->belongsTo(Session::class);
     }
- public function students()
- {
-     return $this->belongsToMany(Student::class, 'batch_student', 'batch_id', 'student_id');
- }
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'batch_student', 'batch_id', 'student_id');
+    }
+    public function monthlyFee()
+    {
+        return $this->hasOne(MonthlyFee::class, 'batches_id', 'id');
+    }
 }

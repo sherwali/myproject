@@ -17,3 +17,7 @@
     <a href="{{ route('allstudents') }}"><i class="fa fa-edit"></i><span>All Students</span></a>
 </li>
 
+<li class="{{ Request::is('monthlyFees*') ? 'active' : '' }}">
+    <a href="{{ route('monthlyFees.index') }}"><i class="fa fa-edit"></i><span>Monthly Fees</span></a>
+</li>
+
